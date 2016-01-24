@@ -9,7 +9,7 @@
 import UIKit
 import AFNetworking
 
-class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
+class MoviesViewController: UIViewController {
   
   @IBOutlet var tableView: UITableView!
   
@@ -17,14 +17,15 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
   var filteredMovies: [NSDictionary]?
   var refreshControl: UIRefreshControl!
   var searchBar: UISearchBar!
+  var accentColor = UIColor(red:0.943, green:0.77, blue:0.007, alpha:1)
+  var endPoint: String! = "now_playing"
   
   override func viewDidLoad() {
-    tableView.delegate = self
     tableView.dataSource = self
         
     refreshControl = UIRefreshControl()
-    refreshControl.attributedTitle = NSAttributedString(string: "Loading...", attributes: [NSForegroundColorAttributeName: UIColor(red:0.943, green:0.77, blue:0.007, alpha:1)])
-    refreshControl.tintColor = UIColor(red:0.943, green:0.77, blue:0.007, alpha:1)
+    refreshControl.attributedTitle = NSAttributedString(string: "Loading...", attributes: [NSForegroundColorAttributeName: accentColor])
+    refreshControl.tintColor = accentColor
     refreshControl.addTarget(self, action: "updateMovieData", forControlEvents: UIControlEvents.ValueChanged)
     self.tableView.insertSubview(refreshControl, atIndex: 0)
     
@@ -36,6 +37,11 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     navigationItem.titleView = searchBar
     searchBar.delegate = self
     
+    navigationController?.navigationBar.tintColor = accentColor
+    
+    // For some reason, this fixes the refresh spinner not having the set tint color on first launch
+    tableView.contentOffset = CGPointMake(0, -self.refreshControl.frame.size.height)
+    
     refreshControl.beginRefreshing()
     updateMovieData()
   }
@@ -44,7 +50,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     UIApplication.sharedApplication().networkActivityIndicatorVisible = true
     
     let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-    let url = NSURL(string:"https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")
+    let url = NSURL(string:"https://api.themoviedb.org/3/movie/\(endPoint)?api_key=\(apiKey)")
     let request = NSURLRequest(URL: url!)
     let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
     configuration.URLCache = nil
@@ -75,45 +81,58 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     task.resume()
   }
   
-  // MARK: - UITableViewDataSource Methods
-  
-  func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    if let movies = filteredMovies {
-      return movies.count
-    }
-    return 0
+  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    let cell = sender as! UITableViewCell
+    let indexPath = tableView.indexPathForCell(cell)
+    let movie = movies![indexPath!.row]
+    
+    let detailViewController = segue.destinationViewController as! DetailViewController
+    detailViewController.movie = movie
+    
   }
-  
-  func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier("MovieCell", forIndexPath: indexPath) as! MovieCell
-    
-    let movie = filteredMovies![indexPath.row]
-    let title = movie["title"] as! String
-    let overview = movie["overview"] as! String
-    
-    let baseURL = "http://image.tmdb.org/t/p/w500"
-    let posterPath: String? = movie["poster_path"] as? String
-    if posterPath != nil {
-      let imageURL = NSURL(string: baseURL + posterPath!)
-      cell.posterView.setImageWithURL(imageURL!)
+}
+
+
+
+
+  extension MoviesViewController: UITableViewDataSource {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+      if let movies = filteredMovies {
+        return movies.count
+      }
+      return 0
     }
-    else {
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+      let cell = tableView.dequeueReusableCellWithIdentifier("MovieCell", forIndexPath: indexPath) as! MovieCell
+      
       cell.posterView.image = UIImage()
+      
+      let movie = filteredMovies![indexPath.row]
+      let title = movie["title"] as! String
+      let overview = movie["overview"] as! String
+      
+      let baseURL = "http://image.tmdb.org/t/p/w500"
+      if let posterPath = movie["poster_path"] as? String {
+        let imageURL = NSURL(string: baseURL + posterPath)
+        cell.posterView.setImageWithURL(imageURL!)
+      }
+      else {
+        cell.posterView.image = UIImage()
+      }
+      
+      cell.titleLabel.text = title
+      cell.overviewLabel.text = overview
+      
+      return cell
     }
-    
-    cell.titleLabel.text = title
-    cell.overviewLabel.text = overview
-    
-    return cell
+
   }
-  
-  // MARK: - UITableViewDelegate Methods
-  
-  
-  
-  
-  // MARK: - UISearchBarDelegate Methods
-  
+
+
+
+
+extension MoviesViewController: UISearchBarDelegate {
   func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
     filteredMovies = searchText.isEmpty ? movies : movies!.filter({(movie: NSDictionary) -> Bool in
       let movieTitle = movie["title"] as! String
@@ -122,18 +141,21 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     tableView.reloadData()
   }
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
 }
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
