@@ -27,11 +27,11 @@ The following **additional** features are implemented:
 - [x] Users can click on a movie to see more details
 - [x] Users on an iPhone 6s or 6s Plus can Peek and Pop the collection view cells
 
-## Video Walkthrough 
+## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/LdPeGAW.gif' title='Video Walkthrough' width='' alt='Video Walkthrough'/>
+<img src='https://github.com/chasemccoy/Flicks/blob/master/flicks1.gif?raw=true' title='Video Walkthrough' width='' alt='Video Walkthrough'/>
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
