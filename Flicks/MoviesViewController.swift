@@ -11,7 +11,6 @@ import AFNetworking
 
 class MoviesViewController: UIViewController {
   
-  @IBOutlet var tableView: UITableView!
   @IBOutlet var collectionView: UICollectionView!
   
   var movies: [NSDictionary]?
@@ -19,7 +18,7 @@ class MoviesViewController: UIViewController {
   var refreshControl: UIRefreshControl!
   var searchBar: UISearchBar!
   var accentColor = UIColor(red:0.943, green:0.77, blue:0.007, alpha:1)
-  var endPoint: String! = "now_playing"
+  var endPoint: String!
   
   override func viewDidLoad() {
     collectionView.dataSource = self

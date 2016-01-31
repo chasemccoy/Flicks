@@ -335,7 +335,7 @@
         <!--Navigation Controller-->
         <scene sceneID="FjW-uv-Q06">
             <objects>
-                <navigationController storyboardIdentifier="MoviesNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="uvT-MS-dyG" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="uvT-MS-dyG" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="Eh9-0y-Kp7">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -353,7 +353,7 @@
         <!--Navigation Controller-->
         <scene sceneID="K7o-ia-i2A">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jfn-Tq-1PD" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MoviesNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="jfn-Tq-1PD" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="Lzm-pt-iHf">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -370,6 +370,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Z3d-sH-qCj"/>
+        <segue reference="3mZ-t9-dJq"/>
     </inferredMetricsTieBreakers>
 </document>
