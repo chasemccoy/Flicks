@@ -29,7 +29,7 @@
                                         <rect key="frame" x="0.0" y="92" width="600" height="128"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7JZ-eR-qr4" id="S3h-AN-fZW">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="128"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="127"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G7M-6q-fFI">
@@ -176,16 +176,25 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="u79-Ac-RGu">
                                                     <rect key="frame" x="0.0" y="0.0" width="160" height="220"/>
                                                 </imageView>
+                                                <view hidden="YES" alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gHL-nc-a5U">
+                                                    <rect key="frame" x="0.0" y="0.0" width="160" height="220"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
                                             <constraint firstItem="u79-Ac-RGu" firstAttribute="leading" secondItem="ZdL-qP-cvj" secondAttribute="leading" id="3im-Tr-Xao"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="gHL-nc-a5U" secondAttribute="trailing" constant="-8" id="JzK-M1-hvn"/>
                                             <constraint firstAttribute="trailing" secondItem="u79-Ac-RGu" secondAttribute="trailing" id="U07-C4-SAc"/>
                                             <constraint firstAttribute="bottom" secondItem="u79-Ac-RGu" secondAttribute="bottom" id="gjE-4s-Zt0"/>
+                                            <constraint firstItem="gHL-nc-a5U" firstAttribute="top" secondItem="ZdL-qP-cvj" secondAttribute="topMargin" constant="-8" id="hYk-Id-d6Q"/>
+                                            <constraint firstAttribute="bottomMargin" secondItem="gHL-nc-a5U" secondAttribute="bottom" constant="-8" id="ppm-uq-ZqK"/>
+                                            <constraint firstItem="gHL-nc-a5U" firstAttribute="leading" secondItem="ZdL-qP-cvj" secondAttribute="leadingMargin" constant="-8" id="qb4-po-TaC"/>
                                             <constraint firstItem="u79-Ac-RGu" firstAttribute="top" secondItem="ZdL-qP-cvj" secondAttribute="top" id="uNo-mo-Z5Z"/>
                                         </constraints>
                                         <connections>
+                                            <outlet property="dimView" destination="gHL-nc-a5U" id="bt2-me-qBq"/>
                                             <outlet property="posterView" destination="u79-Ac-RGu" id="qML-I5-w8J"/>
                                             <segue destination="vnX-fj-pQi" kind="show" id="3mZ-t9-dJq">
                                                 <segue key="commit" inheritsFrom="parent" id="Z3d-sH-qCj"/>

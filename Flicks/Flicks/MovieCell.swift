@@ -11,6 +11,18 @@ import UIKit
 class MovieCell: UICollectionViewCell {
 
   @IBOutlet var posterView: UIImageView!
+  @IBOutlet var dimView: UIView!
+  
+  override var highlighted: Bool {
+    didSet {
+      if self.highlighted {
+        dimView.hidden = false
+      }
+      else {
+        dimView.hidden = true
+      }
+    }
+  }
   
   override func awakeFromNib() {
     super.awakeFromNib()
